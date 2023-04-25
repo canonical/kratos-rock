@@ -12,7 +12,7 @@ platforms:
 services:
   kratos:
     override: replace
-    command: kratos serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
+    command: kratos serve
     startup: enabled
 
 parts:
