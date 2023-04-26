@@ -20,6 +20,8 @@ parts:
     plugin: go
     build-snaps:
       - go/1.19/stable
+    build-environment:
+      - GOFLAGS: -ldflags=-w -ldflags=-s
     source: https://github.com/ory/kratos
     source-type: git
     source-tag: v0.13.0
