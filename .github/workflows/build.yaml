@@ -10,6 +10,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Get name
+        id: name
+        run: echo "name=$(yq '.name' rockcraft.yaml)" >> "$GITHUB_OUTPUT"
+
       - uses: canonical/craft-actions/rockcraft-pack@main
         id: rockcraft
 
@@ -18,13 +22,13 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Create SBOM
-        run: syft ${{ steps.rockcraft.outputs.rock }} -o spdx-json=kratos.sbom.json
+        run: syft ${{ steps.rockcraft.outputs.rock }} -o spdx-json=${{ steps.name.outputs.name }}.sbom.json
 
       - name: Upload SBOM
         uses: actions/upload-artifact@v3
         with:
-          name: kratos-sbom
-          path: "kratos.sbom.json"
+          name: ${{ steps.name.outputs.name }}-sbom
+          path: "${{ steps.name.outputs.name }}.sbom.json"
 
       - uses: actions/upload-artifact@v3
         with:
