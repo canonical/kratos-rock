@@ -4,7 +4,7 @@ build-base: ubuntu:22.04
 version: "0.13.0"
 summary: Ory Kratos identity server
 description: |
-  Ory Kratos is an Identity and User Management.
+  Ory Kratos is an Identity and User Management system.
 license: Apache-2.0
 platforms:
   amd64:
