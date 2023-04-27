@@ -22,15 +22,9 @@ parts:
       - go/1.19/stable
     build-environment:
       - GOFLAGS: -ldflags=-w -ldflags=-s
+      - CGO_ENABLED: 0
     source: https://github.com/ory/kratos
     source-type: git
     source-tag: v0.13.0
-    prime:
+    stage:
       - bin/kratos
-      - lib/*/libc.so.6
-      - lib/*/libpthread.so.0
-      - lib/*/ld-linux-x86-64.so.2
-      - lib64
-      - usr
-    stage-packages:
-      - libc6_libs
