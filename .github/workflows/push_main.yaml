@@ -1,5 +1,10 @@
 name: Push (main)
 
+# When pushing to the "main" branch, we:
+# * build the rock image
+# * publish the image
+# * scan the image and upload the artifacts to the repository
+
 on:
   push:
     branches:

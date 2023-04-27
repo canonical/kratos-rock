@@ -1,3 +1,4 @@
+# Scan the published rock image and upload the results
 name: Scan
 
 on:
