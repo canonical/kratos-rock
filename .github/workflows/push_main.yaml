@@ -12,6 +12,7 @@ on:
     paths:
       - "rockcraft.yaml"
       - ".github/workflows/**.yaml"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,4 +23,5 @@ jobs:
     uses: ./.github/workflows/publish.yaml
 
   scan:
+    needs: publish
     uses: ./.github/workflows/scan.yaml
