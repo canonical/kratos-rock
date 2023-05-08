@@ -23,8 +23,15 @@ parts:
     build-environment:
       - GOFLAGS: -ldflags=-w -ldflags=-s
       - CGO_ENABLED: 0
+    build-packages:
+      - ca-certificates
     source: https://github.com/ory/kratos
     source-type: git
     source-tag: v0.13.0
-    stage:
-      - bin/kratos
+    override-build: |
+      mkdir -p ${CRAFT_PART_INSTALL}/etc/ssl/certs
+
+      go mod download
+      go build -o ${CRAFT_PART_INSTALL}/bin/kratos
+
+      cp -r /etc/ssl/certs ${CRAFT_PART_INSTALL}/etc/ssl/
