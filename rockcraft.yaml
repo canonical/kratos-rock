@@ -26,5 +26,8 @@ parts:
     source: https://github.com/ory/kratos
     source-type: git
     source-tag: v0.13.0
-    stage:
-      - bin/kratos
+    override-build: |
+      go mod download
+      go build -o ${CRAFT_PART_INSTALL}/bin/kratos
+    stage-packages:
+      - ca-certificates_data
