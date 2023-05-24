@@ -30,4 +30,8 @@ parts:
       go mod download
       go build -o ${CRAFT_PART_INSTALL}/bin/kratos
     stage-packages:
-      - ca-certificates_data
+      # We cannot mix packages and slices, so we can't use the `ca-certificates_data` slice
+      - ca-certificates
+      # These packages are needed to pipe the stdout/stderr to a file, which is needed for log forwarding
+      - dash
+      - coreutils
