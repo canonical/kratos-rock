@@ -12,10 +12,24 @@ platforms:
 services:
   kratos:
     override: replace
-    command: kratos serve
+    command: /bin/sh -c "kratos serve all 2>&1 | tee -a /aba.txt"
     startup: enabled
 
 parts:
+  util:
+    plugin: nil
+    stage-packages:
+      # This is needed to pipe the stdout/stderr to a file for log forwarding
+      - coreutils
+    prime:
+      - usr/bin/tee
+
+  shell:
+    plugin: nil
+    stage-packages:
+      # This is needed to pipe the stdout/stderr to a file for log forwarding
+      - dash
+
   kratos:
     plugin: go
     build-snaps:
@@ -30,9 +44,4 @@ parts:
       go mod download
       go build -o ${CRAFT_PART_INSTALL}/bin/kratos
     stage-packages:
-      # We cannot mix packages and slices, so we can't use the `ca-certificates_data` slice
-      - ca-certificates
-      # These packages are needed to pipe the stdout/stderr to a file, which is needed for log forwarding
-      - dash
-      - coreutils
-      - base-passwd
+      - ca-certificates_data
