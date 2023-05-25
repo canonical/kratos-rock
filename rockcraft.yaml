@@ -35,3 +35,4 @@ parts:
       # These packages are needed to pipe the stdout/stderr to a file, which is needed for log forwarding
       - dash
       - coreutils
+      - base-passwd
