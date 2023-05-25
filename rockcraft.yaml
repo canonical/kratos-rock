@@ -12,7 +12,7 @@ platforms:
 services:
   kratos:
     override: replace
-    command: /bin/sh -c "kratos serve all 2>&1 | tee -a /aba.txt"
+    command: kratos serve all
     startup: enabled
 
 parts:
