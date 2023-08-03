@@ -1,7 +1,7 @@
 name: kratos
 base: bare
 build-base: ubuntu:22.04
-version: "0.13.0"
+version: "1.0.0"
 summary: Ory Kratos identity server
 description: |
   Ory Kratos is an Identity and User Management system.
@@ -39,7 +39,7 @@ parts:
       - CGO_ENABLED: 0
     source: https://github.com/ory/kratos
     source-type: git
-    source-tag: v0.13.0
+    source-tag: v1.0.0
     override-build: |
       src_config_path="github.com/ory/kratos/driver"
       build_ver="${src_config_path}/config.Version"
