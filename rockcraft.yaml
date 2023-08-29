@@ -31,6 +31,11 @@ parts:
       # This is needed to pipe the stdout/stderr to a file for log forwarding
       - dash
 
+  certificates:
+    plugin: nil
+    stage-packages:
+      - ca-certificates
+
   kratos:
     plugin: go
     build-snaps:
@@ -53,5 +58,3 @@ parts:
 
       go mod download
       go build -ldflags="${go_linker_flags}" -o ${CRAFT_PART_INSTALL}/bin/kratos
-    stage-packages:
-      - ca-certificates_data
