@@ -58,3 +58,5 @@ parts:
 
       go mod download
       go build -ldflags="${go_linker_flags}" -o ${CRAFT_PART_INSTALL}/bin/kratos
+    stage-packages:
+      - ca-certificates_data
