@@ -9,6 +9,8 @@ license: Apache-2.0
 run-user: _daemon_
 platforms:
   amd64:
+environment:
+  TMPDIR: /
 
 services:
   kratos:
@@ -22,8 +24,6 @@ parts:
     stage-packages:
       # This is needed to pipe the stdout/stderr to a file for log forwarding
       - coreutils
-    prime:
-      - usr/bin/tee
 
   shell:
     plugin: nil
@@ -35,6 +35,18 @@ parts:
     plugin: nil
     stage-packages:
       - ca-certificates
+  
+  sed:
+    plugin: nil
+    stage-packages:
+      - sed
+  
+  find:
+    plugin: nil
+    stage-packages:
+      - findutils
+    prime:
+      - usr/bin/find
 
   kratos:
     plugin: go
