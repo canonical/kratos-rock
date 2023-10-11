@@ -20,10 +20,14 @@ parts:
   util:
     plugin: nil
     stage-packages:
-      # This is needed to pipe the stdout/stderr to a file for log forwarding
+      # This is needed to pipe the stdout/stderr to a file for log forwarding and to update certificates
       - coreutils
-    prime:
-      - usr/bin/tee
+  
+  openssl:
+    plugin: nil
+    stage-packages:
+      # This is needed to update certificates
+      - openssl
 
   shell:
     plugin: nil
@@ -39,6 +43,8 @@ parts:
       mkdir -p $CRAFT_PART_INSTALL/etc/ssl/certs
       mkdir -p $CRAFT_PART_INSTALL/usr/share/ca-certificates/mozilla/
       mkdir -p $CRAFT_PART_INSTALL/usr/sbin
+      mkdir -p $CRAFT_PART_INSTALL/tmp
+      
       touch $CRAFT_PART_INSTALL/etc/ssl/certs/ca-certificates.crt
       touch $CRAFT_PART_INSTALL/etc/ca-certificates.conf
       for cert in /usr/share/ca-certificates/mozilla/* ; do
@@ -47,6 +53,8 @@ parts:
       done
       cp /usr/share/ca-certificates/mozilla/* $CRAFT_PART_INSTALL/usr/share/ca-certificates/mozilla
       cp /usr/sbin/update-ca-certificates $CRAFT_PART_INSTALL/usr/sbin/update-ca-certificates
+      chmod 777 $CRAFT_PART_INSTALL/tmp
+      chmod -R 777 $CRAFT_PART_INSTALL/etc/ssl/certs
 
   sed:
     plugin: nil
