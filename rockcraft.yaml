@@ -22,7 +22,7 @@ parts:
     stage-packages:
       # This is needed to pipe the stdout/stderr to a file for log forwarding and to update certificates
       - coreutils
-  
+
   openssl:
     plugin: nil
     stage-packages:
@@ -44,7 +44,7 @@ parts:
       mkdir -p $CRAFT_PART_INSTALL/usr/share/ca-certificates/mozilla/
       mkdir -p $CRAFT_PART_INSTALL/usr/sbin
       mkdir -p $CRAFT_PART_INSTALL/tmp
-      
+
       touch $CRAFT_PART_INSTALL/etc/ssl/certs/ca-certificates.crt
       touch $CRAFT_PART_INSTALL/etc/ca-certificates.conf
       for cert in /usr/share/ca-certificates/mozilla/* ; do
@@ -60,7 +60,7 @@ parts:
     plugin: nil
     stage-packages:
       - sed
-  
+
   find:
     plugin: nil
     stage-packages:
@@ -78,6 +78,15 @@ parts:
     source-type: git
     source-tag: v1.1.0
     override-build: |
+      # Patch the repo and replace the hydra sdk version
+      # Workaround for https://github.com/ory/kratos/issues/3904
+      # TODO(nsklikas): Remove when issue is fixed
+      cp $CRAFT_PROJECT_DIR/kratos.patch .
+      git apply -v kratos.patch
+      go mod edit -replace github.com/ory/hydra-client-go/v2=github.com/ory/hydra-client-go/v2@v2.2.0
+      go mod tidy
+
+      # Set the necessary flags
       src_config_path="github.com/ory/kratos/driver"
       build_ver="${src_config_path}/config.Version"
       build_hash="${src_config_path}/config.Commit"
@@ -88,5 +97,6 @@ parts:
                        -X ${build_hash}=$(git -C "${CRAFT_PART_SRC}" rev-parse HEAD) \
                        -X ${build_date}=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
+      # Build the binary
       go mod download
       go build -ldflags="${go_linker_flags}" -o ${CRAFT_PART_INSTALL}/bin/kratos
