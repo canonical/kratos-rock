@@ -73,7 +73,7 @@ parts:
     build-snaps:
       - go/1.21/stable
     build-environment:
-      - CGO_ENABLED: 0
+      - CGO_ENABLED: "0"
     source: https://github.com/ory/kratos
     source-type: git
     source-tag: v1.1.0
