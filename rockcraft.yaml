@@ -39,14 +39,6 @@ parts:
     source-type: git
     source-tag: v1.1.0
     override-build: |
-      # Patch the repo and replace the hydra sdk version
-      # Workaround for https://github.com/ory/kratos/issues/3904
-      # TODO(nsklikas): Remove when issue is fixed
-      cp $CRAFT_PROJECT_DIR/kratos.patch .
-      git apply -v kratos.patch
-      go mod edit -replace github.com/ory/hydra-client-go/v2=github.com/ory/hydra-client-go/v2@v2.2.0
-      go mod tidy
-
       # Set the necessary flags
       src_config_path="github.com/ory/kratos/driver"
       build_ver="${src_config_path}/config.Version"
