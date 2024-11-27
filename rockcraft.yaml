@@ -38,6 +38,8 @@ parts:
     source: https://github.com/ory/kratos
     source-type: git
     source-tag: v1.3.1
+    stage-packages:
+      - ca-certificates_data
     override-build: |
       # Set the necessary flags
       src_config_path="github.com/ory/kratos/driver"
