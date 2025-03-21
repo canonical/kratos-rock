@@ -45,6 +45,14 @@ parts:
       cp $CRAFT_PROJECT_DIR/kratos.patch .
       git apply -v kratos.patch
       go mod edit -replace github.com/ory/hydra-client-go/v2=github.com/ory/hydra-client-go/v2@v2.2.0
+
+      # address CVE
+      go mod edit -replace github.com/docker/docker=github.com/docker/docker@v23.0.16+incompatible
+      go mod edit -replace github.com/jackc/pgproto3/v2=github.com/jackc/pgproto3/v2@v2.3.3
+      go mod edit -replace github.com/jackc/pgx/v4=github.com/jackc/pgx/v4@v4.18.2
+      go mod edit -replace golang.org/x/crypto=golang.org/x/crypto@v0.31.0
+      go mod edit -replace  golang.org/x/net/html=golang.org/x/net/html@v0.33.0
+
       go mod tidy
 
       # Set the necessary flags
