@@ -1,0 +1,28 @@
+schemaVersion: 2.0.0
+
+
+globalEnvVars:
+  - key: "DSN"
+    value: "memory"
+  - key: "KRATOS_ADMIN_URL"
+    value: "http://localhost:4444"
+  - key: "SELFSERVICE_DEFAULT_BROWSER_RETURN_URL"
+    value: "http://localhost:4455/welcome"
+  - key: "LOG_LEVEL"
+    value: "debug"
+  - key: "IDENTITY_SCHEMAS_0_URL"
+    value: "base64://eyIkaWQiOiJodHRwczovL3NjaGVtYXMuY2Fub25pY2FsLmNvbS9wcmVzZXRzL2tyYXRvcy91c2VyX3YwLmpzb24iLCIkc2NoZW1hIjoiaHR0cDovL2pzb24tc2NoZW1hLm9yZy9kcmFmdC0wNy9zY2hlbWEjIiwidGl0bGUiOiJQZXJzb24iLCJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJ0cmFpdHMiOnsidHlwZSI6Im9iamVjdCIsInByb3BlcnRpZXMiOnsiZW1haWwiOnsidHlwZSI6InN0cmluZyIsInRpdGxlIjoiRU1haWwifX19fX0K"
+  - key: "IDENTITY_SCHEMAS_0_ID"
+    value: "default"
+
+fileExistenceTests:
+- name: "no go binary"
+  path: "/usr/bin/go"
+  shouldExist: false
+- name: "application go binary"
+  path: "/bin/kratos"
+  shouldExist: true
+commandTests:
+  - name: "application version"
+    command: "/bin/kratos"
+    args: ["version"]

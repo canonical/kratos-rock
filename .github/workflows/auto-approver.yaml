@@ -1,5 +1,5 @@
 name: auto-approver
-run-name: CI for approving PRs
+run-name: CI for approving PR 
 
 on:
   push:
@@ -8,17 +8,6 @@ on:
 
 jobs:
   autoapprove:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - name: Approve PR
-        run: |
-          gh pr review --approve || true
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-      - name: Enable automerge if required
-        if: startsWith(github.ref_name, 'renovate/auto-')
-        run: |
-          gh pr merge --auto --merge || true
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+    uses: canonical/identity-team/.github/workflows/pr-auto-approval.yaml@v1.8.2
+    secrets:
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
