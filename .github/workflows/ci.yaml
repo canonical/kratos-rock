@@ -18,20 +18,20 @@ on:
 
 jobs:
   build:
-    uses: canonical/identity-team/.github/workflows/_rock-build.yaml@v1.8.2
+    uses: canonical/identity-team/.github/workflows/_rock-build.yaml@74923c8fd716e55207cf19359621902c45b24b52 # v1.8.2
     with:
       structure-tests-enabled: true
   gh-publish:
     if: ${{ (github.ref == 'refs/heads/main') || (github.ref_type == 'tag') }}
     needs: build
-    uses: canonical/identity-team/.github/workflows/_rock-gh-publish.yaml@v1.8.2
+    uses: canonical/identity-team/.github/workflows/_rock-gh-publish.yaml@74923c8fd716e55207cf19359621902c45b24b52 # v1.8.2
     with:
       rock: ${{ needs.build.outputs.rock }}
   oci-publish:
     # only release to oci-factory in case of release
     if: github.ref_type == 'tag'
     needs: build
-    uses: canonical/identity-team/.github/workflows/_rock-oci-publish.yaml@v1.8.2
+    uses: canonical/identity-team/.github/workflows/_rock-oci-publish.yaml@74923c8fd716e55207cf19359621902c45b24b52 # v1.8.2
     with:
       edge-release: false
       eol-stable-release: "3 month"
@@ -40,13 +40,13 @@ jobs:
   scan:
     if: ${{ (github.ref == 'refs/heads/main') || (github.ref_type == 'tag') }}
     needs: gh-publish
-    uses: canonical/identity-team/.github/workflows/_rock-scan.yaml@v1.8.2
+    uses: canonical/identity-team/.github/workflows/_rock-scan.yaml@74923c8fd716e55207cf19359621902c45b24b52 # v1.8.2
     with:
       image: ${{ needs.gh-publish.outputs.image }}
   oci-update-pr:
     needs: [gh-publish, scan]
     if: github.ref_type == 'tag'
-    uses: canonical/identity-team/.github/workflows/oci-update-pr.yaml@v1.8.2
+    uses: canonical/identity-team/.github/workflows/oci-update-pr.yaml@74923c8fd716e55207cf19359621902c45b24b52 # v1.8.2
     with: 
         oci-image: ${{ needs.gh-publish.outputs.image }}
         repository: canonical/kratos-operator
