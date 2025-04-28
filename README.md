@@ -15,6 +15,11 @@ upstream Ory Kratos. The Kratos rock is used by
 the [kratos-operator](https://github.com/canonical/https://github.com/canonical/kratos-operator)
 charm.
 
+## Security
+
+Please see [SECURITY.md](https://github.com/canonical/kratos-rock/blob/main/SECURITY.md)
+for guidelines on reporting security issues.
+
 ## Contributing
 
 Please refer to the [CONTRIBUTING](CONTRIBUTING.md) for developer guidance.
