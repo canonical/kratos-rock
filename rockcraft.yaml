@@ -42,9 +42,12 @@ parts:
       # Addressing CVE
       # TODO(@shipperizer) thing about using a git patch for the go.mod
       go mod edit -replace golang.org/x/crypto=golang.org/x/crypto@v0.35.0
-      go mod edit -replace golang.org/x/net/html=golang.org/x/net/html@v0.33.0
+      go mod edit -replace golang.org/x/net=golang.org/x/net@v0.38.0
       go mod edit -replace github.com/golang-jwt/jwt/v4=github.com/golang-jwt/jwt/v4@v4.5.2
       go mod edit -replace  github.com/golang-jwt/jwt/v5=github.com/golang-jwt/jwt/v5@v5.2.2
+      go mod edit -replace github.com/golang/glog=github.com/golang/glog@v1.2.4
+      go mod edit -replace github.com/go-jose/go-jose/v3=github.com/go-jose/go-jose/v3@v3.0.4
+      go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.0.5
 
       go mod tidy
       # Build the binary
