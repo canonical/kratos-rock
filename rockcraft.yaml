@@ -50,6 +50,7 @@ parts:
       go mod edit -replace github.com/go-jose/go-jose/v3=github.com/go-jose/go-jose/v3@v3.0.4
       go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.0.5
       go mod edit -replace golang.org/x/oauth2=golang.org/x/oauth2@v0.27.0
+      go mod edit -replace github.com/opencontainers/runc=github.com/opencontainers/runc@v1.2.8
 
       go mod tidy
       # Build the binary
