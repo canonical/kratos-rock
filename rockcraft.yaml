@@ -1,7 +1,7 @@
 name: kratos
 base: bare
 build-base: ubuntu@22.04
-version: "1.3.1"
+version: "25.4.0"
 summary: Ory Kratos identity server
 description: |
   Ory Kratos is an Identity and User Management system.
@@ -20,12 +20,12 @@ parts:
   kratos:
     plugin: go
     build-snaps:
-      - go/1.24/stable
+      - go/1.25/stable
     build-environment:
       - CGO_ENABLED: "0"
     source: https://github.com/ory/kratos
     source-type: git
-    source-tag: v1.3.1
+    source-tag: v25.4.0
     stage-packages:
       - ca-certificates_data
       - base-files_chisel
@@ -40,19 +40,7 @@ parts:
                        -X ${build_ver}=$(git -C "${CRAFT_PART_SRC}" describe --tags) \
                        -X ${build_hash}=$(git -C "${CRAFT_PART_SRC}" rev-parse HEAD) \
                        -X ${build_date}=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-      # Addressing CVE
-      # TODO(@shipperizer) thing about using a git patch for the go.mod
-      go mod edit -replace golang.org/x/crypto=golang.org/x/crypto@v0.35.0
-      go mod edit -replace golang.org/x/net=golang.org/x/net@v0.38.0
-      go mod edit -replace github.com/golang-jwt/jwt/v4=github.com/golang-jwt/jwt/v4@v4.5.2
-      go mod edit -replace  github.com/golang-jwt/jwt/v5=github.com/golang-jwt/jwt/v5@v5.2.2
-      go mod edit -replace github.com/golang/glog=github.com/golang/glog@v1.2.4
-      go mod edit -replace github.com/go-jose/go-jose/v3=github.com/go-jose/go-jose/v3@v3.0.4
-      go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.0.5
-      go mod edit -replace golang.org/x/oauth2=golang.org/x/oauth2@v0.27.0
-      go mod edit -replace github.com/opencontainers/runc=github.com/opencontainers/runc@v1.2.8
 
-      go mod tidy
       # Build the binary
       go mod download
       go build -ldflags="${go_linker_flags}" -o ${CRAFT_PART_INSTALL}/bin/kratos
