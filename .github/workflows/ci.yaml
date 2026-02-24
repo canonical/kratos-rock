@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - "main"
+      - "1/stable"
     paths:
       - "rockcraft.yaml"
       - ".github/workflows/**.yaml"
@@ -19,13 +20,13 @@ jobs:
     with:
       structure-tests-enabled: true
   gh-publish:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1/stable' }}
     needs: build
     uses: canonical/identity-team/.github/workflows/_rock-gh-publish-third-party.yaml@6b27807be4ec7c25045d52ef09ac780d684f65a2 # v1.10.0
     with:
       rock: ${{ needs.build.outputs.rock }}
   oci-publish:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1/stable' }}
     needs: build
     uses: canonical/identity-team/.github/workflows/_rock-oci-publish.yaml@6b27807be4ec7c25045d52ef09ac780d684f65a2 # v1.10.0
     with:
@@ -34,14 +35,14 @@ jobs:
     secrets:
       PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
   scan:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1/stable' }}
     needs: gh-publish
     uses: canonical/identity-team/.github/workflows/_rock-scan.yaml@6b27807be4ec7c25045d52ef09ac780d684f65a2 # v1.10.0
     with:
       image: ${{ needs.gh-publish.outputs.image }}
   oci-update-pr:
     needs: [gh-publish, scan]
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1/stable' }}
     uses: canonical/identity-team/.github/workflows/oci-update-pr.yaml@6b27807be4ec7c25045d52ef09ac780d684f65a2 # v1.10.0
     with:
         oci-image: ${{ needs.gh-publish.outputs.image }}
