@@ -45,7 +45,8 @@ parts:
       # TODO(@shipperizer) thing about using a git patch for the go.mod
       go mod edit -replace go.opentelemetry.io/otel/sdk=go.opentelemetry.io/otel/sdk@v1.40.0
       go mod edit -replace github.com/docker/cli=github.com/docker/cli@v29.3.0+incompatible
-
+      go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.79.3
+      
       go mod tidy
                        
       # Build the binary
