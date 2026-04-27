@@ -20,7 +20,7 @@ parts:
   kratos:
     plugin: go
     build-snaps:
-      - go/1.25/stable
+      - go/1.26/stable
     build-environment:
       - CGO_ENABLED: "0"
     source: https://github.com/ory/kratos
@@ -43,7 +43,9 @@ parts:
 
       # Addressing CVE
       # TODO(@shipperizer) thing about using a git patch for the go.mod
-      go mod edit -replace go.opentelemetry.io/otel/sdk=go.opentelemetry.io/otel/sdk@v1.40.0
+      go mod edit -replace go.opentelemetry.io/otel/sdk=go.opentelemetry.io/otel/sdk@v1.43.0
+      go mod edit -replace github.com/go-jose/go-jose/v3=github.com/go-jose/go-jose/v3@v3.0.5
+      go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.1.4
       go mod edit -replace github.com/docker/cli=github.com/docker/cli@v29.3.0+incompatible
       go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.79.3
       
