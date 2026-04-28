@@ -41,17 +41,21 @@ parts:
                        -X ${build_hash}=$(git -C "${CRAFT_PART_SRC}" rev-parse HEAD) \
                        -X ${build_date}=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-      # Addressing CVE
-      # TODO(@shipperizer) thing about using a git patch for the go.mod
+      # Addressing CVEs
+      # CVE-2026-39883: go.opentelemetry.io/otel/sdk
       go mod edit -replace go.opentelemetry.io/otel/sdk=go.opentelemetry.io/otel/sdk@v1.43.0
+      # CVE-2026-34986: github.com/go-jose/go-jose
       go mod edit -replace github.com/go-jose/go-jose/v3=github.com/go-jose/go-jose/v3@v3.0.5
       go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.1.4
-      go mod edit -replace github.com/docker/cli=github.com/docker/cli@v29.3.0+incompatible
+      # CVE-2026-34040, CVE-2026-33997, CVE-2025-15558: github.com/docker/cli
+      go mod edit -replace github.com/docker/cli=github.com/docker/cli@v29.4.1+incompatible
+      # CVE-2026-33816: github.com/jackc/pgx/v5
+      go mod edit -replace github.com/jackc/pgx/v5=github.com/jackc/pgx/v5@v5.9.2
+      # General security updates
       go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.79.3
+      go mod edit -replace google.golang.org/protobuf=google.golang.org/protobuf@v1.36.11
       
       go mod tidy
-                       
-      # Build the binary
       go mod download
       go build -ldflags="${go_linker_flags}" -o ${CRAFT_PART_INSTALL}/bin/kratos
 
