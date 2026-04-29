@@ -49,6 +49,10 @@ parts:
       go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.1.4
       # CVE-2026-34040, CVE-2026-33997, CVE-2025-15558: github.com/docker/cli
       go mod edit -replace github.com/docker/cli=github.com/docker/cli@v29.4.1+incompatible
+      # GHSA-x744-4wpc-v9h2: github.com/docker/docker
+      go mod edit -replace github.com/docker/docker=github.com/docker/docker@v28.5.3-0.20260325154711-31a1689cb0a1+incompatible
+      go mod edit -replace github.com/moby/moby/api=github.com/moby/moby/api@v1.54.2
+      go mod edit -replace github.com/moby/moby/client=github.com/moby/moby/client@v0.4.1
       # CVE-2026-33816: github.com/jackc/pgx/v5
       go mod edit -replace github.com/jackc/pgx/v5=github.com/jackc/pgx/v5@v5.9.2
       # General security updates
