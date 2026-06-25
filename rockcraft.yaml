@@ -9,6 +9,7 @@ license: Apache-2.0
 run-user: _daemon_
 platforms:
   amd64:
+  arm64:
 
 services:
   kratos:
@@ -60,7 +61,7 @@ parts:
       
       go mod tidy
       go mod download
-      go build -ldflags="${go_linker_flags}" -o ${CRAFT_PART_INSTALL}/bin/kratos
+      GOARCH="${CRAFT_ARCH_BUILD_FOR}" go build -ldflags="${go_linker_flags}" -o ${CRAFT_PART_INSTALL}/bin/kratos
 
   deb-security-manifest:
     plugin: make
