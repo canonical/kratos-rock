@@ -8,6 +8,6 @@ on:
 
 jobs:
   autoapprove:
-    uses: canonical/identity-team/.github/workflows/pr-auto-approval.yaml@d494c16b0ad34b623776893a37c2f70046d0587c # v1.12.1
+    uses: canonical/identity-team/.github/workflows/pr-auto-approval.yaml@d64b860c8679d3539f5f35f3d2494c419d8e41b5 # v1.12.2
     secrets:
       PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
