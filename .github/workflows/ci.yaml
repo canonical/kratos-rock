@@ -41,6 +41,9 @@ jobs:
 
   gh-publish:
     if: ${{ github.ref == 'refs/heads/main' }}
+    permissions:
+      packages: write
+      contents: read
     needs: build
     uses: canonical/identity-team/.github/workflows/_rock-gh-publish-third-party.yaml@d64b860c8679d3539f5f35f3d2494c419d8e41b5 # v1.12.2
 
