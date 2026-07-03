@@ -47,13 +47,14 @@ parts:
       go mod edit -replace github.com/golang-jwt/jwt/v4=github.com/golang-jwt/jwt/v4@v4.5.2
       go mod edit -replace  github.com/golang-jwt/jwt/v5=github.com/golang-jwt/jwt/v5@v5.2.2
       go mod edit -replace github.com/golang/glog=github.com/golang/glog@v1.2.4
-      go mod edit -replace github.com/go-jose/go-jose/v3=github.com/go-jose/go-jose/v3@v3.0.4
-      go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.0.5
+      go mod edit -replace github.com/go-jose/go-jose/v3=github.com/go-jose/go-jose/v3@v3.0.5
+      go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.1.4
       go mod edit -replace golang.org/x/oauth2=golang.org/x/oauth2@v0.27.0
       go mod edit -replace github.com/opencontainers/runc=github.com/opencontainers/runc@v1.2.8
-      go mod edit -replace go.opentelemetry.io/otel/sdk=go.opentelemetry.io/otel/sdk@v1.40.0
+      go mod edit -replace go.opentelemetry.io/otel/sdk=go.opentelemetry.io/otel/sdk@v1.44.0
       go mod edit -replace github.com/docker/cli=github.com/docker/cli@v29.3.0+incompatible
       go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.79.3
+      go mod edit -replace github.com/jackc/pgx/v5=github.com/jackc/pgx/v5@v5.10.0
 
       go mod tidy
       # Build the binary
