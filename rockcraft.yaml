@@ -51,6 +51,10 @@ parts:
       go mod edit -replace github.com/docker/cli=github.com/docker/cli@v29.4.1+incompatible
       # CVE-2026-33816: github.com/jackc/pgx/v5
       go mod edit -replace github.com/jackc/pgx/v5=github.com/jackc/pgx/v5@v5.9.2
+      # CVE-2026-39828, CVE-2026-39829, CVE-2026-39830, CVE-2026-39831, CVE-2026-39832, CVE-2026-39835, CVE-2026-42508, CVE-2026-46595, CVE-2026-46597: golang.org/x/crypto
+      go mod edit -replace golang.org/x/crypto=golang.org/x/crypto@v0.53.0
+      # CVE-2026-25681, CVE-2026-27136, CVE-2026-33814, CVE-2026-39821: golang.org/x/net
+      go mod edit -replace golang.org/x/net=golang.org/x/net@v0.55.0
       # General security updates
       go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.79.3
       go mod edit -replace google.golang.org/protobuf=google.golang.org/protobuf@v1.36.11
