@@ -45,6 +45,8 @@ parts:
       # Addressing CVEs
       # CVE-2026-39883: go.opentelemetry.io/otel/sdk
       go mod edit -replace go.opentelemetry.io/otel/sdk=go.opentelemetry.io/otel/sdk@v1.43.0
+      # CVE-2026-39882: go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp
+      go mod edit -replace go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp=go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v1.43.0
       # CVE-2026-34986: github.com/go-jose/go-jose
       go mod edit -replace github.com/go-jose/go-jose/v3=github.com/go-jose/go-jose/v3@v3.0.5
       go mod edit -replace github.com/go-jose/go-jose/v4=github.com/go-jose/go-jose/v4@v4.1.4
@@ -54,10 +56,21 @@ parts:
       go mod edit -replace github.com/docker/docker=github.com/docker/docker@v28.5.3-0.20260325154711-31a1689cb0a1+incompatible
       go mod edit -replace github.com/moby/moby/api=github.com/moby/moby/api@v1.54.2
       go mod edit -replace github.com/moby/moby/client=github.com/moby/moby/client@v0.4.1
+      # GHSA-gxhx-2686-5h9g: github.com/slack-go/slack
+      go mod edit -replace github.com/slack-go/slack=github.com/slack-go/slack@v0.23.1
+      # CVE-2026-2303: go.mongodb.org/mongo-driver
+      go mod edit -replace go.mongodb.org/mongo-driver=go.mongodb.org/mongo-driver@v1.17.7
       # CVE-2026-33816: github.com/jackc/pgx/v5
       go mod edit -replace github.com/jackc/pgx/v5=github.com/jackc/pgx/v5@v5.9.2
-      # General security updates
+      # GHSA-hrxh-6v49-42gf: google.golang.org/grpc
+      go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.82.1
+      # General security updates and x/ dependencies
       go mod edit -replace google.golang.org/protobuf=google.golang.org/protobuf@v1.36.11
+      go mod edit -replace golang.org/x/crypto=golang.org/x/crypto@v0.52.0
+      go mod edit -replace golang.org/x/mod=golang.org/x/mod@v0.40.0
+      go mod edit -replace golang.org/x/net=golang.org/x/net@v0.56.0
+      go mod edit -replace golang.org/x/text=golang.org/x/text@v0.39.0
+      go mod edit -replace golang.org/x/sys=golang.org/x/sys@v0.44.0
       
       go mod tidy
       go mod download
