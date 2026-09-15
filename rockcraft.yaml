@@ -62,15 +62,15 @@ parts:
       go mod edit -replace go.mongodb.org/mongo-driver=go.mongodb.org/mongo-driver@v1.17.7
       # CVE-2026-33816: github.com/jackc/pgx/v5
       go mod edit -replace github.com/jackc/pgx/v5=github.com/jackc/pgx/v5@v5.9.2
-      # GHSA-hrxh-6v49-42gf: google.golang.org/grpc
-      go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.82.1
+      # CVE-2026-84304, CVE-2026-84445, GHSA-hrxh-6v49-42gf: google.golang.org/grpc
+      go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.83.2
       # General security updates and x/ dependencies
       go mod edit -replace google.golang.org/protobuf=google.golang.org/protobuf@v1.36.11
-      go mod edit -replace golang.org/x/crypto=golang.org/x/crypto@v0.52.0
+      go mod edit -replace golang.org/x/crypto=golang.org/x/crypto@v0.57.0
       go mod edit -replace golang.org/x/mod=golang.org/x/mod@v0.40.0
-      go mod edit -replace golang.org/x/net=golang.org/x/net@v0.56.0
-      go mod edit -replace golang.org/x/text=golang.org/x/text@v0.39.0
-      go mod edit -replace golang.org/x/sys=golang.org/x/sys@v0.44.0
+      go mod edit -replace golang.org/x/net=golang.org/x/net@v0.59.0
+      go mod edit -replace golang.org/x/text=golang.org/x/text@v0.42.0
+      go mod edit -replace golang.org/x/sys=golang.org/x/sys@v0.47.0
       
       go mod tidy
       go mod download
