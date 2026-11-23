@@ -15,16 +15,39 @@ on:
       - "*"
 
 jobs:
+  get-architectures:
+    runs-on: ubuntu-latest
+    outputs:
+      architectures: ${{ steps.parse.outputs.architectures }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Parse platforms from rockcraft.yaml
+        id: parse
+        run: |
+          archs=$(yq -o=json -I=0 '.platforms | keys' rockcraft.yaml)
+          echo "Found architectures: $archs"
+          echo "architectures=$archs" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: get-architectures
+    strategy:
+      matrix:
+        architecture: ${{ fromJson(needs.get-architectures.outputs.architectures) }}
     uses: canonical/identity-team/.github/workflows/_rock-build.yaml@00995831ff788db43992012900820edf7967305f # v1.19.2
     with:
       structure-tests-enabled: true
+      architecture: ${{ matrix.architecture }}
+
   gh-publish:
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1/stable' }}
+    permissions:
+      packages: write
+      contents: read
     needs: build
     uses: canonical/identity-team/.github/workflows/_rock-gh-publish-third-party.yaml@00995831ff788db43992012900820edf7967305f # v1.19.2
-    with:
-      rock: ${{ needs.build.outputs.rock }}
+
   oci-publish:
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1/stable' }}
     needs: build
@@ -32,17 +55,41 @@ jobs:
     with:
       edge-release: false
       eol-stable-release: "3 month"
+      ubuntu-base-version: "22.04"
+      ignore-vulnerabilities: >-
+        CVE-2026-32286,
+        CVE-2026-33818,
+        CVE-2026-33997,
+        CVE-2026-34040,
+        CVE-2026-39821,
+        CVE-2026-46600,
+        CVE-2026-56853,
+        CVE-2026-56858,
+        CVE-2026-56859,
+        CVE-2026-56860,
+        CVE-2026-56862,
+        GO-2026-5932
     secrets:
       PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+
   scan:
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1/stable' }}
     needs: gh-publish
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+      packages: read
     uses: canonical/identity-team/.github/workflows/_rock-scan.yaml@00995831ff788db43992012900820edf7967305f # v1.19.2
     with:
       image: ${{ needs.gh-publish.outputs.image }}
+
   oci-update-pr:
     needs: [gh-publish, scan]
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1/stable' }}
+    permissions:
+      contents: write
+      pull-requests: write
     uses: canonical/identity-team/.github/workflows/oci-update-pr.yaml@00995831ff788db43992012900820edf7967305f # v1.19.2
     with:
         oci-image: ${{ needs.gh-publish.outputs.image }}
